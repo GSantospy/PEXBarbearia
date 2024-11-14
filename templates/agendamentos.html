@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{%block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+	<h2>Agendamentos</h2>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Serviço</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Situação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if agendamentos %}
+              {% for agendamento in agendamentos %}
+                <tr>
+                    <td>{{ agendamento.cliente }}</td>
+                    <td>{{ agendamento.servico }}</td>
+                    <td>{{ agendamento.data }}</td>
+                    <td>{{ agendamento.hora }}</td>
+                    <td>{{ agendamento.situacao }}</td>
+                    <td>
+                        <a href="/alterar_agendamento">
+                          <button>Alterar</button>
+                        </a>
+                        <a href="#" onclick="excluirAgendamento('/excluir_agendamento/{{ loop.index0 }}');" data-bs-toggle="modal" data-bs-target="#confirmarExclusaoModal">
+                          <button>Excluir</button>
+                        </a>
+                    </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="6">Nenhum agendamento realizado.</td>
+              </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" tabindex="-1" id="confirmarExclusaoModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmar Exclusão</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Tem certeza que deseja excluir este agendamento?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="errorModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="errorModalLabel">Agendamento</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="errorMessage"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.onload = function() {
+          const error = "{{ error|default('') }}";
+          if (error) {
+            document.getElementById('errorMessage').innerText = error;
+            const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+            modal.show();
+          }
+        }
+
+        function excluirAgendamento(url) {
+            document.getElementById('confirmarExclusaoBtn').setAttribute('href', url);
+        }
+      </script>
+
+
+{% endblock %}

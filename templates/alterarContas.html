@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{%block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+    <h2>Alterar Conta</h2>
+    <form id="contasForm" action="/alterar_contas" method="post">
+        <div class="mb-3">
+            <input name="descricao" type="text" class="form-control custom-input" id="descricaoConta" placeholder="Descrição" required>
+        </div>
+        <div class="mb-3">
+            <input name="valor" type="number" class="form-control custom-input" id="valorConta" placeholder="Valor" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <select name="situacaoContas" id="contas" class="form-control custom-input" required>
+                <option value="" disabled selected>Escolha a situação</option>
+                <option value="Ativa">Ativa</option>
+                <option value="Paga">Paga</option>
+                <option value="Atrasada">Atrasada</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Alterar</button>
+    </form>
+
+{% endblock %}

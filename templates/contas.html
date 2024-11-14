@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{%block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+    <h2>Contas e Manutenções</h2>
+    <form id="contasForm" action="/contas" method="post">
+        <div class="mb-3">
+            <input name="descricao" type="text" class="form-control custom-input" id="descricaoConta" placeholder="Descrição" required>
+        </div>
+        <div class="mb-3">
+            <input name="valor" type="number" class="form-control custom-input" id="valorConta" placeholder="Valor" step="0.01" required>
+        </div>
+        <div class="mb-3">
+          <input name="vencimento" type="date" id="vencimentoConta" class="form-control custom-input" placeholder="Data" required>
+      </div>
+        <button type="submit" class="btn btn-secondary">Adicionar</button>
+    </form>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if contas %}
+                {% for conta in contas %}
+                    <tr>
+                        <td>{{ conta.descricao }}</td>
+                        <td>{{ conta.valor }}</td>
+                        <td>{{ conta.vencimento }}</td>
+                        <td>{{ conta.status }}</td>
+                        <td>
+                            <a href="/alterar_status_conta/{{ loop.index0 }}/Atraso">
+                                <button>Atraso</button>
+                            </a>
+                            <a href="/alterar_status_conta/{{ loop.index0 }}/Paga">
+                                <button>Pago</button>
+                            </a>
+                            <a href="#" onclick="excluirConta('/excluir_conta/{{ loop.index0 }}');" data-bs-toggle="modal" data-bs-target="#confirmarExclusaoModal">
+                                <button>Excluir</button>
+                            </a>
+                            <a href="/alterar_conta">
+                                <button>Alterar</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">Nenhuma conta registrada.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" tabindex="-1" id="confirmarExclusaoModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmar Exclusão</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Tem certeza que deseja excluir esta conta?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmarExclusaoBtn" class="btn btn-danger">Excluir</a>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="errorModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="errorModalLabel">Contas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p id="errorMessage"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        window.onload = function() {
+          const error = "{{ error|default('') }}";
+          if (error) {
+            document.getElementById('errorMessage').innerText = error;
+            const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+            modal.show();
+          }
+        }
+
+        function excluirConta(url) {
+            document.getElementById('confirmarExclusaoBtn').setAttribute('href', url);
+        }
+      </script>
+
+{% endblock %}

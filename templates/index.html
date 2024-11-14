@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+    <h3>Agendamentos do Dia</h3>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Serviço</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if agendamentosDia %}
+                {% for agendamento in agendamentosDia %}
+                    <tr>
+                        <td>{{ agendamento.cliente }}</td>
+                        <td>{{ agendamento.servico }}</td>
+                        <td>{{ agendamento.data }}</td>
+                        <td>{{ agendamento.hora }}</td>
+                        <td>{{ agendamento.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">Nenhum agendamento realizado para hoje.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Produtos com Estoque Crítico</h3>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Validade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if estoqueCritico %}
+                {% for produto in estoqueCritico %}
+                    <tr>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.quantidade }}</td>
+                        <td>{{ produto.validade }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">Nenhum produto com estoque crítico.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <hr>
+    <h3>Contas a Vencer</h3>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if contasVencer %}
+                {% for conta in contasVencer %}
+                    <tr>
+                        <td>{{ conta.descricao }}</td>
+                        <td>{{ conta.valor }}</td>
+                        <td>{{ conta.status }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">Nenhuma conta ativa ou atrasada.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+{% endblock %}

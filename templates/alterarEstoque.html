@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{%block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+	<h2>Alterar Produto</h2>
+    <form id="estoqueForm" action="/alterar_estoque" method="post">
+        <div class="mb-4">
+            <input name="nome" type="text" class="form-control custom-input" id="produtoEstoque" placeholder="Produto" required>
+        </div>
+        <div class="mb-4">
+            <input name="quantidade" type="number" class="form-control custom-input" id="quantidadeEstoque" placeholder="Quantidade" required>
+        </div>
+        <div class="mb-4">
+            <input name="validade" type="date" id="validadeProduto" class="form-control custom-input" placeholder="Data" required>
+        </div>
+        <button type="submit" class="btn btn-secondary">Alterar</button>
+    </form>
+
+
+{% endblock %}

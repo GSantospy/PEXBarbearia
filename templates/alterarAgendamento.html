@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+<h2>Alterar Agendamento</h2>
+
+
+<form id="agendarForm" action="/alterar_agendamento/{{ index }}" method="post">
+    <div class="mb-3">
+        <select name="servico" id="servicos" class="form-control custom-input" required>
+            <option value="" disabled selected>Escolha o serviço</option>
+            <option value="Corte">Corte</option>
+            <option value="Barba">Barba</option>
+            <option value="Sobrancelha">Sobrancelha</option>
+            <option value="Reflexo">Reflexo</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <input name="data" type="date" id="dataAgendamento" class="form-control custom-input" placeholder="Data" 
+               value="{{ data }}" min="{{ hoje }}" onchange="atualizarHorariosDisponiveis()" required>
+    </div>
+
+    <div class="mb-3">
+        <select name="hora" id="horaAgendamento" class="form-control custom-input" required>
+            {% if horariosDisponiveis %}
+                {% for hora in horariosDisponiveis %}
+                    <option value="{{ hora }}" {% if agendamento.hora == hora %}selected{% endif %}>{{ hora }}</option>
+                {% endfor %}
+            {% else %}
+                <option disabled selected>Sem horários disponíveis para esta data</option>
+            {% endif %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-secondary" {% if not horariosDisponiveis %}disabled{% endif %}>Alterar</button>
+    </div>
+</form>
+
+<script>
+    function atualizarHorariosDisponiveis() {
+        const data = document.getElementById('dataAgendamento').value;
+        const index = "{{ index }}";
+        window.location.href = `/alterar_agendamento/${index}?data=${data}`;
+    }
+
+
+
+    function calcularDataMaxima() {
+        const hoje = new Date();
+        const dataMaxima = new Date(hoje.setMonth(hoje.getMonth() + 3));
+        const max = dataMaxima.toISOString().split("T")[0];
+        document.getElementById('dataAgendamento').setAttribute('max', max);
+    }
+    window.onload = function() {
+        calcularDataMaxima();
+        const hoje = new Date().toISOString().split("T")[0];
+        document.getElementById('dataAgendamento').setAttribute('min', hoje);
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{%block title %}Barbearia{% endblock %}
+
+{% block content %}
+
+    <h2>Perfil</h2>
+    <form id="perfilForm">
+        <div class="mb-3">
+            <input class="form-control custom-input" placeholder="Email" disabled>
+        </div>
+        <div class="mb-3">
+            <input class="form-control custom-input" placeholder="Nome" disabled>
+        </div>
+        <div class="mb-3 position-relative">
+            <input class="form-control custom-input" placeholder="Senha" disabled>
+            <i class="bi bi-eye-slash position-absolute" id="togglePerfil" style="right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+        </div>
+
+
+        <button type="submit" class="btn btn-secondary" disabled>Salvar Alterações</button>
+    </form>
+
+    <hr>
+
+    <h3>Relatórios</h3>
+    <form id="relatorioEXCEL" action="/relatorio/excel" method="get" class="d-inline-block">
+        <button type="submit" class="btn btn-success">EXCEL</button>
+    </form>
+    <form id="relatorioPDF" action="/relatorio/pdf" method="get" class="d-inline-block">
+        <button type="submit" class="btn btn-danger">PDF</button>
+    </form>
+    <hr>
+
+    <h3>Serviços Contratados</h3>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Serviço</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if agendamentos %}
+                {% for agendamento in agendamentos %}
+                    <tr>
+                        <td>{{ agendamento.servico}}</td>
+                        <td>{{ agendamento.data }}</td>
+                        <td>{{ agendamento.hora }}</td>
+                        <td>{{ agendamento.situacao }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                    <tr>
+                        <td colspan="4">Nenhum serviço contratado.</td>
+                    </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+
+{% endblock %}
