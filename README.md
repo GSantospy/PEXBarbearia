@@ -35,6 +35,7 @@ Este projeto é uma aplicação web desenvolvida com FastAPI para agendamento de
 - [ ] **Alterar Conta**
 - [ ] **Alterar Agendamento**
 - [ ] **Alterar Perfil**
+- [ ] **Notificação de novo agendamento**
 
 ## :electric_plug: Rodando o Projeto
 
