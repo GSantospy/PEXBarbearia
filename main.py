@@ -234,7 +234,8 @@ async def listarAgendamento(request: Request):
         "cliente": ag["cliente"],
         "servico": ag["servico"],
         "data": datetime.strptime(ag["data"], "%Y-%m-%d").strftime("%d/%m/%Y"),
-        "hora": ag["hora"]
+        "hora": ag["hora"],
+        "situacao": ag["situacao"]
     } for ag in agendamentos]
 
     return templates.TemplateResponse("agendamentos.html", {
