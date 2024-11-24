@@ -9,9 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/loading.css">
 </head>
 <body>
-    
+  <div id="loading">
+    <svg viewBox="25 25 50 50">
+        <circle r="20" cy="50" cx="50"></circle>
+    </svg>
+  </div>
+  <div id="content" style="display: none;">
     <main>
         <div class="container">
     
@@ -86,7 +92,9 @@
           </div>
         </div>
       </div>
-
+  </div>
+      <script src="/static/script.js"></script>
+      <script src="/static/loading.js"></script>
       <script>
         window.onload = function() {
           const error = "{{ error|default('') }}";
