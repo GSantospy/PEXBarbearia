@@ -89,8 +89,9 @@ A aplicação é construída sobre o framework **FastAPI** e segue a arquitetura
 ### Estrutura de Diretório
 ```bash
 /static
-  /css
-  /js
+  /favicon.ico
+  /script.js
+  /style.css
 /templates
   /index.html
   /login.html
